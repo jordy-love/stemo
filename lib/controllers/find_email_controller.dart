@@ -5,32 +5,32 @@ import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
 import 'package:stemo/theme/colors.dart';
 
-class LoginController extends GetxController {
-  final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
+class FindEmailController extends GetxController {
+  final GlobalKey<FormState> findEmailFormKey = GlobalKey<FormState>();
   final userData = GetStorage();
   var logger = Logger();
 
-  late TextEditingController emailController, passwordController;
+  late TextEditingController nameController, hpController;
   var email = '';
   var password = '';
 
-  final FocusNode emailFocusNode = FocusNode();
-  final FocusNode passwordFocusNode = FocusNode();
+  final FocusNode nameFocusNode = FocusNode();
+  final FocusNode hpFocusNode = FocusNode();
 
 
   @override
   void onInit() {
     super.onInit();
-    emailController = TextEditingController();
-    passwordController = TextEditingController();
+    nameController = TextEditingController();
+    hpController = TextEditingController();
   }
 
   @override
   void onClose() {
-    emailController.dispose();
-    passwordController.dispose();
-    emailFocusNode.dispose();
-    passwordFocusNode.dispose();
+    nameController.dispose();
+    hpController.dispose();
+    nameFocusNode.dispose();
+    hpFocusNode.dispose();
   }
 
   @override
@@ -38,6 +38,7 @@ class LoginController extends GetxController {
     super.onReady();
   }
 
+  /*
   String? validateEmail(String value) {
     if (!GetUtils.isEmail(value)) {
       return '*올바른 이메일 형식이 아닙니다.';
@@ -54,11 +55,11 @@ class LoginController extends GetxController {
 
   void checkLogin() {
     final isValid =
-        loginFormKey.currentState!.validate(); // TextFormField()내의 validator 실행
+        findEmailFormKey.currentState!.validate(); // TextFormField()내의 validator 실행
     if (!isValid) {
       return;
     }
-    loginFormKey.currentState!.save(); // onSaved()실행
+    findEmailFormKey.currentState!.save(); // onSaved()실행
 
     var checkUserEmail = 'test@test.com';//'stemo.team@gmail.com';
     var checkUserPassword = '00000000';//'vmfflsdl9@';
@@ -67,11 +68,13 @@ class LoginController extends GetxController {
     if (email.compareTo(checkUserEmail) != 0 || password.compareTo(checkUserPassword) != 0) {
       userDataFailDialog();
     } else {
-      userData.write('user_id', email);
-      logger.d('로그인완료:' + userData.read('user_id'));
+      storage.write('user_id', email);
+      logger.d('로그인완료:' + storage.read('user_id'));
       Get.offAllNamed('/');
     }
   }
+
+   */
 
   void userDataFailDialog() {
     Get.dialog(
