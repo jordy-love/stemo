@@ -73,7 +73,6 @@ class FindEmailController extends GetxController {
       Get.offAllNamed('/');
     }
   }
-
    */
 
   void userDataFailDialog() {
