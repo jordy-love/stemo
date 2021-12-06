@@ -17,7 +17,6 @@ class FindEmailController extends GetxController {
   final FocusNode nameFocusNode = FocusNode();
   final FocusNode hpFocusNode = FocusNode();
 
-
   @override
   void onInit() {
     super.onInit();

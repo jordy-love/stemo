@@ -71,14 +71,17 @@ class LoginEmailView extends StatelessWidget {
                             hintStyle:
                                 TextStyle(color: grayFontColor, fontSize: 14),
                             hintText: '이메일 입력',
-                            suffixIcon: Icon(Icons.check),
+                            suffixIcon: Container(width: 0,), //Icon(Icons.check),
                           ),
                           keyboardType: TextInputType.emailAddress,
                           controller: controller.emailController,
                           focusNode: controller.emailFocusNode,
-                          textInputAction: TextInputAction.next,
+                          //textInputAction: TextInputAction.next,
                           onSaved: (value) {
                             controller.email = value!;
+                          },
+                          onChanged: (value) {
+
                           },
                           validator: (value) {
                             return controller.validateEmail(value!);
@@ -102,7 +105,7 @@ class LoginEmailView extends StatelessWidget {
                             hintStyle:
                                 TextStyle(color: grayFontColor, fontSize: 14),
                             hintText: '영어 소문자, 숫자, 특수문자 포함 8자리 이상',
-                            suffixIcon: Icon(Icons.check),
+                            suffixIcon: Container(width: 0,), //Icon(Icons.check),
                           ),
                           keyboardType: TextInputType.visiblePassword,
                           obscureText: true,
