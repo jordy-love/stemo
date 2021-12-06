@@ -17,6 +17,10 @@ class LoginController extends GetxController {
   final FocusNode emailFocusNode = FocusNode();
   final FocusNode passwordFocusNode = FocusNode();
 
+  var emailSuffix = ''.obs;
+  var passwordSuffix = ''.obs;
+  var confirmBtn = false.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -39,37 +43,47 @@ class LoginController extends GetxController {
 
   String? validateEmail(String value) {
     print("fn:validateEmail()");
-    if (!GetUtils.isEmail(value) && !emailFocusNode.hasFocus && value.isNotEmpty) {
+    if (!GetUtils.isEmail(value) && value.isNotEmpty) {
+      // && !emailFocusNode.hasFocus
+      emailSuffix.value = 'error';
       return '*올바른 이메일 형식이 아닙니다.';
     }
+    emailSuffix.value = 'confirm';
+    //if (passwordSuffix.value == 'confirm') confirmBtn.value = true;
     return null;
   }
 
   String? validatePassword(String value) {
     print("fn:validatePassword()");
-    if (value.length < 8 && !passwordFocusNode.hasFocus && value.isNotEmpty) {
+    var pattern =
+        r'^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$'; //(?=.*?[A-Z])
+    var regExp = RegExp(pattern);
+    if (!regExp.hasMatch(value) && value.isNotEmpty) {
+      passwordSuffix.value = 'error';
       return '*영어 소문자, 숫자, 특수문자 포함 8자리 이상';
     }
+    passwordSuffix.value = 'confirm';
+    //if (emailSuffix.value == 'confirm') confirmBtn.value = true;
     return null;
   }
+
 
   void checkLogin() {
     print("fn:checkLogin()");
     final isValid =
         loginFormKey.currentState!.validate(); // TextFormField()내의 validator 실행
+
     if (!isValid) {
       return;
     }
     loginFormKey.currentState!.save(); // onSaved()실행
 
-    var checkUserEmail = 'test@test.com'; //'stemo.team@gmail.com';
+    var checkUserEmail = 'stemo.team@gmail.com';
     var checkUserPassword = '00000000'; //'vmfflsdl9@';
-    logger.d(email.compareTo(checkUserEmail));
 
     if (email.compareTo(checkUserEmail) != 0 ||
         password.compareTo(checkUserPassword) != 0) {
       userDataFailDialog();
-
     } else {
       userData.write('user_id', email);
       logger.d('로그인완료:' + userData.read('user_id'));

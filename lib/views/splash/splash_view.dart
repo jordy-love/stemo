@@ -53,7 +53,7 @@ class _SplashViewState extends State<SplashView> {
 
   @override
   void initState() {
-    Timer(Duration(seconds: 3), () {
+    Timer(Duration(seconds: 1), () {
       //Get.offAll(StartScreen());
       Get.offAllNamed('/start');
     });

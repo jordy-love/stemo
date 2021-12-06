@@ -33,6 +33,8 @@ class LoginEmailView extends StatelessWidget {
               autovalidateMode: AutovalidateMode.onUserInteraction,
               child: Expanded(
                 child: InkWell(
+                  highlightColor: Colors.white,
+                  splashColor: Colors.white,
                   onTap: () {
                     FocusScope.of(context).unfocus(); //focusout
                   },
@@ -71,7 +73,10 @@ class LoginEmailView extends StatelessWidget {
                             hintStyle:
                                 TextStyle(color: grayFontColor, fontSize: 14),
                             hintText: '이메일 입력',
-                            suffixIcon: Container(width: 0,), //Icon(Icons.check),
+                            suffixIcon: Obx(() =>
+                                controller.emailSuffix.value == 'error'
+                                    ? Icon(Icons.close, color: Colors.red)
+                                    : Icon(Icons.check)),
                           ),
                           keyboardType: TextInputType.emailAddress,
                           controller: controller.emailController,
@@ -80,9 +85,7 @@ class LoginEmailView extends StatelessWidget {
                           onSaved: (value) {
                             controller.email = value!;
                           },
-                          onChanged: (value) {
-
-                          },
+                          onChanged: (value) {},
                           validator: (value) {
                             return controller.validateEmail(value!);
                           },
@@ -105,7 +108,10 @@ class LoginEmailView extends StatelessWidget {
                             hintStyle:
                                 TextStyle(color: grayFontColor, fontSize: 14),
                             hintText: '영어 소문자, 숫자, 특수문자 포함 8자리 이상',
-                            suffixIcon: Container(width: 0,), //Icon(Icons.check),
+                            suffixIcon: Obx(() =>
+                                controller.passwordSuffix.value == 'error'
+                                    ? Icon(Icons.close, color: Colors.red)
+                                    : Icon(Icons.check)),
                           ),
                           keyboardType: TextInputType.visiblePassword,
                           obscureText: true,
@@ -124,13 +130,13 @@ class LoginEmailView extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             TextButton(
+                              onPressed: () {
+                                Get.toNamed('/find_email');
+                              },
                               child: Text(
                                 '이메일 찾기',
                                 style: TextStyle(color: Color(0XFF565E67)),
                               ),
-                              onPressed: () {
-                                Get.toNamed('/find_email');
-                              },
                             ),
                             Padding(
                               padding: const EdgeInsets.all(5.0),
@@ -139,14 +145,14 @@ class LoginEmailView extends StatelessWidget {
                               ),
                             ),
                             TextButton(
-                              child: Text(
-                                '비밀번호 재설정',
-                                style: TextStyle(color: Color(0XFF565E67)),
-                              ),
                               onPressed: () {
                                 //flutterToast('서비스 준비중이에요.😢');
                                 Get.toNamed('/find_password');
                               },
+                              child: Text(
+                                '비밀번호 재설정',
+                                style: TextStyle(color: Color(0XFF565E67)),
+                              ),
                             ),
                           ],
                         ),
@@ -160,23 +166,23 @@ class LoginEmailView extends StatelessWidget {
               width: double.infinity,
               height: 60,
               child: ElevatedButton(
-                child: Text(
-                  '로그인',
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.white,
+                  style: ElevatedButton.styleFrom(
+                    primary: grayFontColor,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(0.0)),
+                    side: BorderSide(width: 0.0),
+                  ),
+                  onPressed: () {
+                    controller.checkLogin();
+                  },
+                  child: Text(
+                    '로그인',
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
-                style: ElevatedButton.styleFrom(
-                  primary: grayFontColor,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(0.0)),
-                  side: BorderSide(width: 0.0),
-                ),
-                onPressed: () {
-                  controller.checkLogin();
-                },
-              ),
             ),
           ],
         ),
